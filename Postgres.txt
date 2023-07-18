@@ -110,3 +110,4 @@ The dollar symbol ($$) is used as a delimiter in PostgreSQL to enclose the body 
 
 By using the dollar symbol as a delimiter, you can avoid issues that may arise when single quotes are used within the SQL code of the stored procedure or function. This is especially useful when the SQL code itself contains single quotes or when the code spans multiple lines, as it eliminates the need to escape or manipulate single quotes.
 
+--- END ---
