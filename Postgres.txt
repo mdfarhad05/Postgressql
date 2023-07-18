@@ -1,0 +1,112 @@
+1. Postgres Procedure 
+
+Creating a Stored Procedure:
+
+To create a stored procedure in PostgreSQL, you can use the CREATE OR REPLACE PROCEDURE statement. 
+
+Example:
+
+CREATE OR REPLACE PROCEDURE get_employee(IN employee_id INT)
+LANGUAGE SQL
+AS $$
+SELECT * FROM employees WHERE id = employee_id;
+$$
+
+We create a stored procedure called get_employee that takes an input parameter employee_id of type INT. The procedure selects all columns from the employees table where the id matches the provided employee_id.
+
+Executing a Stored Procedure:
+
+To execute a stored procedure, you can use the CALL statement or simply invoke the procedure name.
+
+Example:
+
+-- Using the CALL statement
+CALL get_employee(1);
+
+-- Invoking the procedure name
+SELECT get_employee(1);
+
+In both cases, we call the get_employee procedure and pass the value 1 as the employee_id parameter. The procedure will execute the SQL statement inside and return the result.
+
+Modifying a Stored Procedure:
+
+If you want to modify an existing stored procedure, you can use the CREATE OR REPLACE PROCEDURE statement again with the updated procedure definition. 
+
+Example:
+
+CREATE OR REPLACE PROCEDURE get_employee(IN employee_id INT, OUT emp_name TEXT)
+LANGUAGE SQL
+AS $$
+SELECT name INTO emp_name FROM employees WHERE id = employee_id;
+$$
+
+In this modified version, we added an output parameter emp_name of type TEXT to the get_employee procedure. The procedure selects the employee's name from the employees table based on the provided employee_id and assigns it to the output parameter.
+
+Dropping a Stored Procedure:
+
+To remove a stored procedure from the database, you can use the DROP PROCEDURE statement.
+
+Example:
+
+DROP PROCEDURE get_employee;
+
+In this case, the get_employee procedure will be dropped from the database, and you won't be able to execute it anymore.
+
+
+
+
+2. Postgres View
+
+Creating a View:
+
+To create a view in PostgreSQL, you can use the CREATE OR REPLACE VIEW statement.  
+
+Example:
+
+CREATE OR REPLACE VIEW employee_details AS
+SELECT id, name, email, hire_date
+FROM employees;
+
+
+In this example, we create a view called employee_details. The view selects the id, name, email, and hire_date columns from the employees table. The view acts as a virtual table that contains the result of this query.
+
+Querying a View:
+
+Once the view is created, you can query it like you would query a regular table. 
+
+Example:
+
+SELECT * FROM employee_details;
+
+This query will retrieve all the rows and columns from the employee_details view. Behind the scenes, the database engine will execute the underlying SELECT statement defined in the view's definition.
+
+Modifying a View:
+
+If you want to modify an existing view, you can use the CREATE OR REPLACE VIEW statement again with the updated view definition.
+
+Example:
+
+CREATE OR REPLACE VIEW employee_details AS
+SELECT id, name, email, hire_date, department
+FROM employees
+JOIN departments ON employees.department_id = departments.id;
+
+In this modified version, we added the department column to the view by performing a JOIN between the employees and departments tables. The view now includes the department information for each employee.
+
+Dropping a View:
+
+To remove a view from the database, you can use the DROP VIEW statement.
+
+Example:
+
+DROP VIEW employee_details;
+
+In this case, the employee_details view will be dropped from the database, and you won't be able to query it anymore.
+
+
+Why $$ Symbole Used:
+
+The dollar symbol ($$) is used as a delimiter in PostgreSQL to enclose the body of a stored procedure or function. It is often used instead of single quotes ('') to provide a more convenient way to handle multiline SQL code.
+
+By using the dollar symbol as a delimiter, you can avoid issues that may arise when single quotes are used within the SQL code of the stored procedure or function. This is especially useful when the SQL code itself contains single quotes or when the code spans multiple lines, as it eliminates the need to escape or manipulate single quotes.
+
